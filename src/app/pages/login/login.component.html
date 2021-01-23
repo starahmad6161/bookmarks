@@ -1,0 +1,121 @@
+
+<div class="register">
+  <div class="container d-flex h-100">
+    <div class="row m-auto w-100">
+      <div class="col-md-11 col-lg-10 mx-auto bg-white my-3 rounded">
+        <div class="row my-4 p-5">
+          <div class="col-md-6 text-center">
+            <img class="w-75 mb-3 mb-md-0" src="../../../assets/login.webp" alt="login">
+          </div>
+          <div class="col-md-6">
+            <div class="choose-btns d-flex mb-2">
+              <div class="choose-btn w-50 pointer" [class.active]="loginChoosed" (click)="loginChoosed = true">
+                <h2 class="py-3 px-2 text-center">Login</h2>
+              </div>
+              <div class="choose-btn w-50 pointer" [class.active]="!loginChoosed" (click)="loginChoosed = false">
+                <h2 class="py-3 px-2 text-center">Signup</h2>
+              </div>
+            </div>
+            <!--
+              <h2 class="text-center fw-bold mb-4">Login</h2>
+            -->
+            <!--forms-container-->
+            <div class="forms-container overflow-hidden d-flex">
+              <!--Login Form-->
+              <div class="login w-100 flex-shrink-0" [class.active]="loginChoosed">
+                <form [formGroup]="loginForm" #ngLoginForm="ngForm" (ngSubmit)="login()">
+                  <!--Input Group-->
+                  <div class="rounded-pill position-relative border overflow-hidden d-flex">
+                    <fa-icon class="icon d-flex align-items-center px-3" [icon]="faEnvelope"></fa-icon>
+                    <input formControlName="email" [class.is-invalid]="(ngLoginForm.submitted || email.touched) && email.invalid" class="form-control border-0" type="text" placeholder="Email">
+                  </div>
+                  <!--Email Errors-->
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngLoginForm.submitted || email.touched) && email.errors?.required">
+                    Email Is Required
+                  </small>
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngLoginForm.submitted || email.touched) && email.errors?.email">
+                    Email format invalid
+                  </small>
+                  <!--Input Group-->
+                  <div class="rounded-pill position-relative border overflow-hidden d-flex mt-4">
+                    <fa-icon class="icon d-flex align-items-center px-3" [icon]="faLock"></fa-icon>
+                    <input formControlName="password" [class.is-invalid]="(ngLoginForm.submitted || password.touched) && password.invalid" class="form-control border-0" type="password" placeholder="Password">
+                  </div>
+                  <!--Password Errors-->
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngLoginForm.submitted || password.touched) && password.errors?.required">
+                    Password Is Required
+                  </small>
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngLoginForm.submitted || password.touched) && password.errors?.minlength">
+                    Password must be 6 character or more
+                  </small>
+                  <div class="text-center">
+                    <button class="main-btn btn btn-success text-center rounded-pill mt-4" [disabled]="loading" [class.loading]="loading">
+                      <span *ngIf="!loading">Login</span>
+                      <app-btn-loading [class.d-none]="!loading"></app-btn-loading>
+                    </button>
+                  </div>
+                  <div class="alert alert-info mt-3" *ngIf="errMsg">
+                    {{ errMsg }}
+                  </div>
+
+                  <div class="text-muted mt-3">
+                    For Test: <br>
+                    test@test.com <br>
+                    123456
+                  </div>
+                </form>
+              </div>
+              <!--Signup Form-->
+              <div class="signup w-100 flex-shrink-0" [class.active]="!loginChoosed">
+                <form [formGroup]="signupForm" #ngSignupForm="ngForm" (ngSubmit)="signup()">
+                  <!--Input Group-->
+                  <div class="rounded-pill position-relative border overflow-hidden d-flex">
+                    <fa-icon class="icon d-flex align-items-center px-3" [icon]="faUser"></fa-icon>
+                    <input formControlName="signupUsername" [class.is-invalid]="(ngSignupForm.submitted || signupUsername.touched) && signupUsername.invalid" class="form-control border-0" type="text" placeholder="username">
+                  </div>
+                  <!--Email Errors-->
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngSignupForm.submitted || signupUsername.touched) && signupUsername.errors?.required">
+                    username Is Required
+                  </small>
+                  <!--Input Group-->
+                  <div class="rounded-pill position-relative border overflow-hidden d-flex mt-4">
+                    <fa-icon class="icon d-flex align-items-center px-3" [icon]="faEnvelope"></fa-icon>
+                    <input formControlName="signupEmail" [class.is-invalid]="(ngSignupForm.submitted || signupEmail.touched) && signupEmail.invalid" class="form-control border-0" type="text" placeholder="Email">
+                  </div>
+                  <!--Email Errors-->
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngSignupForm.submitted || signupEmail.touched) && signupEmail.errors?.required">
+                    Email Is Required
+                  </small>
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngSignupForm.submitted || signupEmail.touched) && signupEmail.errors?.email">
+                    Email format invalid
+                  </small>
+                  <!--Input Group-->
+                  <div class="rounded-pill position-relative border overflow-hidden d-flex mt-4">
+                    <fa-icon class="icon d-flex align-items-center px-3" [icon]="faLock"></fa-icon>
+                    <input formControlName="signupPassword" [class.is-invalid]="(ngSignupForm.submitted || signupPassword.touched) && signupPassword.invalid" class="form-control border-0" type="password" placeholder="Password">
+                  </div>
+                  <!--Password Errors-->
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngSignupForm.submitted || signupPassword.touched) && signupPassword.errors?.required">
+                    Password Is Required
+                  </small>
+                  <small class="err-msg text-danger ps-3" *ngIf="(ngSignupForm.submitted || signupPassword.touched) && signupPassword.errors?.minlength">
+                    Password must be 6 character or more
+                  </small>
+                  <div class="text-center">
+                    <button class="main-btn btn btn-success text-center rounded-pill mt-4" [disabled]="loading" [class.loading]="loading">
+                      <span *ngIf="!loading">Signup</span>
+                      <app-btn-loading [class.d-none]="!loading"></app-btn-loading>
+                    </button>
+                  </div>
+                  <div class="alert alert-info mt-3" *ngIf="errMsg">
+                    {{ errMsg }}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

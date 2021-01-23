@@ -1,1 +1,72 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+html, body
+{
+  transition : .3s;
+  font-family: 'Cairo' ,sans-serif !important;
+  font-weight: 600;
+}
+body
+{
+  background: url(https://wallpaperaccess.com/full/1155007.jpg) center center no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+.bg-semi-white
+{
+  background: rgba(255,255,255,.8);
+}
+.dark-border
+{
+  border: 1px solid #2f4f6f;
+}
+.h1,.h2,.h3,.h4,.h5,.h6,.form-control,.form-select, span
+{
+  font-weight: 600 !important;
+}
+.pointer
+{
+  cursor: pointer;
+}
+.trans-2
+{
+  transition: .2s;
+}
+.btn:focus
+{
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.yellow-color
+{
+  background-color: #ffae00 !important;
+  transition: .2s;
+  &:hover
+  {
+    background-color: #cc8b00 !important;
+  }
+}
+.red-color
+{
+  background-color: #ec5840 !important;
+  transition: .2s;
+  &:hover
+  {
+    background-color: #da3116 !important;
+  }
+}
+.blue-color
+{
+  background-color: #2199e8 !important;
+  transition: .2s;
+  &:hover
+  {
+    background-color: #1583cc !important;
+  }
+}
+.delete-btn
+{
+  width: 55px;
+}

@@ -1,0 +1,133 @@
+
+
+<app-confirm (deleteConfirmed)="deleteItem($event)" *ngIf="showConfirmMsg"></app-confirm>
+
+
+
+<div class="todo my-5">
+  <div class="container">
+    <div class="bg-semi-white px-3 py-4 rounded shadow-sm border">
+      <h2 class="h2 mb-4">Bookmarks/Notes</h2>
+
+      <form [formGroup]="bookmarkForm" #ngForm="ngForm" (ngSubmit)="addNewItem()">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <!--Filter Box-->
+                <div class="filter-by ms-auto">
+                  <select #selectFilterBy class="form-select ms-auto pointer" (change)="selectedFilterBy($event.target.value)">
+                    <option value="" selected>Select Keyword</option>
+                    <option [value]="item" *ngFor="let item of filterList">{{ item }}</option>
+                  </select>
+                </div>
+              </div>
+              <!--keyword-->
+              <div class="col-md-6 mb-3">
+                <input formControlName="keyword" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || keyword.touched) && keyword.invalid" type="text" placeholder="keyword (ex. youtube)"/>
+              </div>
+            </div>
+          </div>
+          <!--title-->
+          <div class="col-lg-6 mb-3">
+            <input formControlName="title" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || title.touched) && title.invalid" type="text" placeholder="Title"/>
+          </div>
+        </div>
+        <!--URL-->
+        <input formControlName="url" class="form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || url.touched) && url.invalid" type="text" placeholder="URL"/>
+        <!--Description-->
+        <textarea formControlName="description" class="form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || description.touched) && description.invalid" placeholder="Description"></textarea>
+
+        <!--Button-->
+        <div class="position-relative mb-2 d-flex justify-content-end" [class.d-none]="isEdit">
+            <button class="btn rounded-0 blue-color text-white" [disabled]="addLoading || ngForm.invalid">
+              <div class="d-flex" *ngIf="!addLoading">
+                <fa-icon class="me-2" [icon]="faPlus"></fa-icon> Add
+              </div>
+              <app-btn-loading [class.d-none]="!addLoading"></app-btn-loading>
+            </button>
+        </div>
+
+        <div class="d-flex justify-content-end" *ngIf="isEdit">
+          <!--button-->
+          <button class="btn text-white rounded-0 btn-success" type="button" (click)="saveEdit()">
+            <span *ngIf="!addLoading">
+              <fa-icon [icon]="faSave"></fa-icon>
+              Save
+            </span>
+            <app-btn-loading [class.d-none]="!addLoading"></app-btn-loading>
+          </button>
+          <!--Button-->
+          <button class="btn text-white rounded-0 red-color" type="button" (click)="cancelEdit()">
+            <span *ngIf="!addLoading">
+              <fa-icon [icon]="faEdit"></fa-icon>
+              Cancel
+            </span>
+            <app-btn-loading [class.d-none]="!addLoading"></app-btn-loading>
+          </button>
+        </div>
+      </form>
+
+      <hr>
+
+
+      <div class="list-content mt-4">
+        <!--filter-section-->
+        <div class="filter-section text-white py-2 px-2">
+          <!--Filter Box-->
+          <div class="filter-by ms-auto d-flex align-items-center" *ngIf="filterList.length != 0">
+            <span class="text fw-bold me-2 text-nowrap">Filter By</span>
+            <select #filterSelect class="form-select ms-auto mt-2 pointer" (change)="filterBy($event.target.value)">
+              <option value="" selected>All</option>
+              <option [value]="item" *ngFor="let item of filterList">{{ item }}</option>
+            </select>
+          </div>
+        </div>
+        <!--No Items Alert-->
+        <div class="alert alert-info mt-3" *ngIf="listItems.length == 0">
+          No items yet
+        </div>
+        <!--All Items-->
+        <ul class="list-unstyled list-items mt-4" *ngIf="listItems.length != 0">
+          <li class="list-item dark-border shadow-sm rounded position-relative mb-4" *ngFor="let item of listItems; trackBy: trackBy">
+
+            <!--action btns-->
+            <div class="action-btns-container overflow-hidden">
+              <div class="action-btns d-flex">
+                <!--Button-->
+                <button class="btn text-white rounded-0 blue-color" (click)="openEdit(item)">
+                  <span *ngIf="!addLoading">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                    Edit
+                  </span>
+                  <app-btn-loading [class.d-none]="!addLoading"></app-btn-loading>
+                </button>
+                <!--Button-->
+                <button class="btn text-white rounded-0 red-color" (click)="deleteItemConfirm(item.id)">
+                  <span *ngIf="!addLoading">
+                    <fa-icon [icon]="faEdit"></fa-icon>
+                    Delete
+                  </span>
+                  <app-btn-loading [class.d-none]="!addLoading"></app-btn-loading>
+                </button>
+              </div>
+            </div>
+            <!--Item Head-->
+            <div class="item-head">
+              <!--Keyword box-->
+              <div class="keyword text-center text-uppercase px-3 py-1 fw-bold"
+                [appAddClass]="item.color">{{ item.keyword }}
+              </div>
+              <h2 class="title h3 px-3 py-3 mb-0">{{ item.title }}</h2>
+            </div>
+            <!--Item Body-->
+            <div class="item-body px-3 py-3">
+              <p class="description mb-3 fw-bold">{{ item.description }}</p>
+              <a class="link d-block p-2" [href]="item.url" target="_blank">{{ item.url }}</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

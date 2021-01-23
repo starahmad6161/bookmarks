@@ -1,0 +1,52 @@
+
+
+<app-confirm (deleteConfirmed)="deleteItem($event)" *ngIf="showConfirmMsg"></app-confirm>
+<app-confirm (deleteConfirmed)="deleteCompletedTasks($event)" *ngIf="showConfirmMsgForAll"></app-confirm>
+
+<div class="todo mt-5">
+  <div class="container">
+    <div class="bg-semi-white px-3 py-4 rounded shadow-sm border">
+      <h2 class="h2">Tasks <span class="tasks-num" [class.active]="listItems.length > 0">({{ listItems.length }})</span></h2>
+      <!--Input-->
+      <div class="position-relative mb-2 d-flex justify-content-between">
+          <input #todoInput class="form-control w-100 rounded-left rounded-0" type="text" (keydown.enter)="addNewItem()" placeholder="Your Task"/>
+          <button class="btn rounded-0 blue-color text-white" [disabled]="addLoading">
+            <div class="d-flex" *ngIf="!addLoading">
+              <fa-icon class="me-2" [icon]="faPlus"></fa-icon> Add
+            </div>
+            <app-btn-loading *ngIf="addLoading"></app-btn-loading>
+          </button>
+      </div>
+      <!--Buttons-->
+      <div class="buttons text-end" *ngIf="isCompleted()">
+        <button class="yellow-color btn text-white rounded-0" (click)="deleteAllItemConfirm()">
+          <div *ngIf="!deleteLoading">
+            <fa-icon [icon]="faCheck"></fa-icon>
+            Clear Completed Tasks
+          </div>
+          <app-btn-loading *ngIf="deleteLoading"></app-btn-loading>
+        </button>
+      </div>
+
+
+      <div class="alert alert-info" *ngIf="listItems.length == 0">
+        No Tasks Yet
+      </div>
+      <ul class="list-unstyled list-items mb-0 mt-4">
+        <!--Item-->
+        <li class="list-item position-relative d-flex justify-content-between border trans-2 pointer mb-3" [class.opacity-5]="item.complete" *ngFor="let item of listItems; let i = index">
+            <span class="text trans-2 d-inline-block position-relative w-100 d-flex" [class.checked]="item.complete" (click)="changeState(item.id, item.complete)">
+              <div class="num me-2 p-2 d-flex align-items-center">{{ i + 1 }}</div>
+              <span class="txt position-relative py-3 px-2">
+                {{ item.title }}
+              </span>
+            </span>
+            <button class="delete-btn btn rounded-0 red-color text-white" (click)="deleteItemConfirm(item.id)" [disabled]="deleteLoading">
+              <fa-icon [icon]="faTimes" *ngIf="!deleteLoading"></fa-icon>
+              <app-btn-loading *ngIf="deleteLoading"></app-btn-loading>
+            </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

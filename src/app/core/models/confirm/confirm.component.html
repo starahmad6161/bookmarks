@@ -1,0 +1,10 @@
+<div class="confirm position-fixed">
+  <div class="overlay" (click)="deletedConfirm(false)" @fade></div>
+  <div class="confirm-msg mx-auto mt-4 bg-white p-4 rounded" (click)="$event.stopPropagation()" @slideDownFade>
+    <span class="h3 mb-3 d-block">Are you sure you want delete this item!</span>
+    <div class="buttons text-end">
+      <button class="btn" (click)="deletedConfirm(true)">Delete</button>
+      <button class="btn yellow-color" (click)="deletedConfirm(false)">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+.navbar
+{
+  .nav-item
+  {
+    .nav-link
+    {
+      transition: .3s;
+      &:hover,
+      &.active
+      {
+        background-color: #0087FE;
+      }
+    }
+  }
+}
+.navbar-dark .navbar-toggler:focus
+{
+  outline: none;
+  box-shadow: none;
+}

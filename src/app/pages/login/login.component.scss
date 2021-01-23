@@ -1,0 +1,57 @@
+.register .form-control:focus
+{
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.main-btn
+{
+  transition: .3s;
+  width: 100%;
+  &.loading
+  {
+    width: 55px;
+  }
+}
+
+.icon
+{
+  color: #555;
+  background-color: #d4d4d4;
+}
+
+.choose-btns
+{
+  .choose-btn
+  {
+      background-color: #fff;
+    &.active
+    {
+      background-color: #ddd;
+    }
+  }
+}
+.forms-container
+{
+  .login
+  {
+    transform: translateX(-100%);
+  }
+  .login,
+  .signup
+  {
+    transition: .3s;
+    &.active
+    {
+      transform: translateX(0);
+    }
+    &.signup.active
+    {
+      transform: translateX(-100%);
+    }
+    &.active ~ .signup
+    {
+      transform: translateX(100%);
+    }
+  }
+}

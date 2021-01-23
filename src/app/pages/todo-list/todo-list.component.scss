@@ -1,0 +1,78 @@
+input:checked ~ .other
+{
+  transition: .2s;
+  width: 50px;
+  height: 50px;
+  background-color: #f00;
+}
+.opacity-5
+{
+  opacity: .5;
+  transition: .5s;
+  &:hover
+  {
+    opacity: 1;
+  }
+}
+.num
+{
+  background-color: rgba(0,0,0,0.05);
+}
+
+
+.todo .form-control:focus
+{
+  outline: none;
+  box-shadow: none;
+}
+.delete-btn
+{
+  width: 55px;
+}
+.tasks-num
+{
+  color: #6d6d6d;
+  opacity: 0;
+  transition: .5s;
+  &.active
+  {
+    opacity: 1;
+  }
+}
+.list-item
+{
+  .txt
+  {
+    &::after
+    {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: #222;
+      position: absolute;
+      top: 50%;
+      left: 0px;
+      transition: 0.2s;
+      transform: translateY(13px);
+      opacity: 0;
+    }
+  }
+  .text
+  {
+    background-color: rgba(0,0,0,0.05);
+    &.checked
+    {
+      background-color: rgba(0,128,0,0.25);
+      border-color: rgba(0,128,0,0.25);
+      .txt
+      {
+        &::after
+        {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
