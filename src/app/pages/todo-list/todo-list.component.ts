@@ -11,10 +11,6 @@ import { faCheck, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 export class TodoListComponent implements OnInit {
 
   @ViewChild("todoInput") todoInput:ElementRef;
-  @HostListener("click") onClick() {
-    this.addNewItem();
-  }
-
   faCheck = faCheck;
   faTimes = faTimes;
   faPlus = faPlus;

@@ -1,6 +1,6 @@
 import { Bookmark } from './../../core/interfaces/bookmark';
 import { DbService } from './../../core/services/db.service';
-import { AfterContentInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { faCheck, faTimes, faPlus, faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 @Component({
@@ -8,7 +8,7 @@ import { faCheck, faTimes, faPlus, faEdit, faSave } from '@fortawesome/free-soli
   templateUrl: './bookmarks.component.html',
   styleUrls: ['./bookmarks.component.scss']
 })
-export class BookmarksComponent implements OnInit, AfterContentInit {
+export class BookmarksComponent implements OnInit, AfterViewInit {
 
   @ViewChild("filterSelect") filterSelect:ElementRef;
   @ViewChild("selectFilterBy") selectFilterBy:ElementRef;
@@ -34,7 +34,7 @@ export class BookmarksComponent implements OnInit, AfterContentInit {
   randomColorList:Array<string> = ["color-1", "color-2", "color-3", "color-4", "color-5", "color-6", "color-7", "color-8", "color-8"];
 
   constructor(private _DbService:DbService) { }
-  ngAfterContentInit(): void {
+  ngAfterViewInit(): void {
     this.getListItems('');
     this.loadFilters();
   }
@@ -42,7 +42,7 @@ export class BookmarksComponent implements OnInit, AfterContentInit {
   bookmarkForm = new FormGroup({
     keyword: new FormControl(null, [Validators.required]),
     title: new FormControl(null, [Validators.required]),
-    url: new FormControl(null, [Validators.required]),
+    url: new FormControl(null),
     description: new FormControl(null, [Validators.required]),
   });
 
@@ -71,6 +71,7 @@ export class BookmarksComponent implements OnInit, AfterContentInit {
           return {
             id: item.payload.doc.id,
             ...<any>item.payload.doc.data(),
+            url: item.payload.doc.data()["url"] ? this.getLinksAsArray(item.payload.doc.data()["url"]) : [],
             color: this.colorsList.includes(keyword)? keyword : this.randomColor
           }
         });
@@ -83,12 +84,20 @@ export class BookmarksComponent implements OnInit, AfterContentInit {
           return {
             id: item.payload.doc.id,
             ...<any>item.payload.doc.data(),
+            url: item.payload.doc.data()["url"] ? this.getLinksAsArray(item.payload.doc.data()["url"]) : [],
             color: this.colorsList.includes(keyword)? keyword : this.randomColor
           }
         });
         this.listItems = listItems.sort((a, b)=> a.date - b.date);
       });
     }
+  }
+
+  getLinksAsArray(links:string) {
+    return links.split(",").map(item => item.trim());
+  }
+  getLinksAsString(links:string[]) {
+    return links.toString();
   }
 
 
@@ -156,14 +165,13 @@ export class BookmarksComponent implements OnInit, AfterContentInit {
     this.bookmarkForm.reset({
       keyword: item.keyword,
       title: item.title,
-      url: item.url,
+      url: this.getLinksAsString(item.url),
       description: item.description
     });
     window.scroll(0,0);
   }
   saveEdit() {
     let item = {
-      date: new Date(),
       keyword: this.keyword.value,
       title: this.title.value,
       url: this.url.value,

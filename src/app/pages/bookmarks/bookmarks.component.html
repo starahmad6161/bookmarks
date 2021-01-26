@@ -24,19 +24,19 @@
               </div>
               <!--keyword-->
               <div class="col-md-6 mb-3">
-                <input formControlName="keyword" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || keyword.touched) && keyword.invalid" type="text" placeholder="keyword (ex. youtube)"/>
+                <input formControlName="keyword" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || keyword.touched) && keyword.invalid" type="text" placeholder="keyword (ex. youtube)*"/>
               </div>
             </div>
           </div>
           <!--title-->
           <div class="col-lg-6 mb-3">
-            <input formControlName="title" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || title.touched) && title.invalid" type="text" placeholder="Title"/>
+            <input formControlName="title" class="form-control w-100" [class.is-invalid]="(ngForm.submitted || title.touched) && title.invalid" type="text" placeholder="Title*"/>
           </div>
         </div>
         <!--URL-->
-        <input formControlName="url" class="form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || url.touched) && url.invalid" type="text" placeholder="URL"/>
         <!--Description-->
-        <textarea formControlName="description" class="form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || description.touched) && description.invalid" placeholder="Description"></textarea>
+        <textarea formControlName="url" class="urls_input form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || url.touched) && url.invalid" type="text" placeholder="Link1, link2, link3..."></textarea>
+        <textarea formControlName="description" class="form-control w-100 mb-3" [class.is-invalid]="(ngForm.submitted || description.touched) && description.invalid" placeholder="Description*"></textarea>
 
         <!--Button-->
         <div class="position-relative mb-2 d-flex justify-content-end" [class.d-none]="isEdit">
@@ -123,7 +123,9 @@
             <!--Item Body-->
             <div class="item-body px-3 py-3">
               <p class="description mb-3 fw-bold">{{ item.description }}</p>
-              <a class="link d-block p-2" [href]="item.url" target="_blank">{{ item.url }}</a>
+              <div class="link rounded" *ngIf="item.url">
+                <a class="d-block p-2" [href]="url" *ngFor="let url of item.url" target="_blank">{{ url }}</a>
+              </div>
             </div>
           </li>
         </ul>

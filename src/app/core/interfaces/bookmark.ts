@@ -3,6 +3,6 @@ export interface Bookmark {
   keyword?:string,
   title?:string,
   description?:string,
-  url?:string,
+  url?:string[],
   color?:string
 }

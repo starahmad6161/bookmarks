@@ -10,7 +10,7 @@
       <!--Input-->
       <div class="position-relative mb-2 d-flex justify-content-between">
           <input #todoInput class="form-control w-100 rounded-left rounded-0" type="text" (keydown.enter)="addNewItem()" placeholder="Your Task"/>
-          <button class="btn rounded-0 blue-color text-white" [disabled]="addLoading">
+          <button class="btn rounded-0 blue-color text-white" [disabled]="addLoading" (click)="addNewItem()">
             <div class="d-flex" *ngIf="!addLoading">
               <fa-icon class="me-2" [icon]="faPlus"></fa-icon> Add
             </div>
